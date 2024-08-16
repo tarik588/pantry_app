@@ -1,5 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+FIREBASEAPIKEY = AIzaSyBj76zUihq_C_21SEV7o2xOJSaNvye3_7Y
 # dependencies
 /node_modules
 /.pnp
@@ -27,7 +27,6 @@ yarn-error.log*
 
 # local env files
 .env*.local
-/Users/tarikamraoui/Desktop/pantry_app/pantry-app/.env
 # vercel
 .vercel
 
