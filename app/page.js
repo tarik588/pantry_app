@@ -24,6 +24,7 @@ export default function Home() {
     });
     setInventory(inventoryList)
   };
+ 
   const formatItemName = (name) => {
     if (!name) return "";
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -50,17 +51,13 @@ export default function Home() {
       const { count } = docSnap.data();
   
       if (count > 1) {
-        // Decrement the count if it's greater than 1
         await setDoc(docRef, { count: count - 1 });
       } else if (count === 1) {
-        // Delete the document if the count is 1
         await deleteDoc(docRef);
       }
     } else {
       console.log('Item does not exist');
-    }
-  
-    await updateInv();
+    }await updateInv();
   };
   
   const handleInputChange = (e) => {
@@ -78,11 +75,11 @@ export default function Home() {
     }
   }
 
-  const getHighlightStyle = (item) => {
-    return item.toLowerCase().includes(itemName.toLowerCase()) 
-      ? { backgroundColor: 'rgba(0,0,255,0.1)', color: 'White' } 
-      : {};
-  }
+  // const getHighlightStyle = (item) => {
+  //   return item.toLowerCase().includes(itemName.toLowerCase()) 
+  //     ? { backgroundColor: 'rgba(0,0,255,0.1)', color: 'White' } 
+  //     : {};
+  // }
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -121,7 +118,7 @@ export default function Home() {
             value={itemName}
             onChange={handleInputChange}
             label="Item Name"
-            style={getHighlightStyle(itemName)}
+            //style={getHighlightStyle(itemName)}
           />
           <Button
             variant="outlined"
@@ -149,19 +146,60 @@ export default function Home() {
         </Box>
       </Modal>
 
-      <Typography variant="h1">Inventory Management</Typography>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Add or Remove Item
-      </Button>        
-      <Stack direction="row" gap={2} spacing={2}>
+      <Typography
+    variant="h1"
+    sx={{
+      position: 'absolute', 
+      top: '10%', 
+      left: '50%',
+      transform: 'translateX(-50%)',
+      mb: 2, 
+    }}
+  >
+    InventoryAI
+  </Typography>
+      
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={handleOpen}
+    sx={{
+      position: 'absolute',
+      bottom: '10%', // Adjust this value to move it closer to the bottom
+      left: '50%',
+      transform: 'translateX(-50%)',
+    }}
+  >
+    Add or Remove Item
+  </Button>      
+  <Stack
+    maxHeight="30%"  // Increase this to extend the height downwards
+    overflow="auto"
+    position="absolute"
+    //top="10%"  // Keeps the top margin the same
+    height="50%"  // Set the height of the Stack to extend it downwards
+    direction="column"
+    gap={2}
+    spacing={2}
+    sx={{ width: '10%', left: '50%', transform: 'translateX(-60%)' }}  // Centers the Stack horizontally
+>
         {inventory.map((item) => (
-          <Box key={item.name}>
-                        <Typography style={getHighlightStyle(item.name)}>{item.name}</Typography>
-
-            <Typography>{item.count}</Typography>
-          </Box>
-        ))}
+         <Box
+         key={item.name}
+         display="flex"
+         flexDirection="column"
+         alignItems="center"
+         justifyContent="center"
+         textAlign="center"
+       >
+         <Typography fontSize={"1.5rem"}>{item.name}</Typography>
+         <Typography>{item.count}</Typography>
+       </Box>
+     ))}
       </Stack>
+
+      
     </Box>
+    
   )
 }
